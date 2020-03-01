@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { API } from './configs/API';
 
 function App() {
+  const test = () => {
+    // console.log(API.headers);
+    const res = API.get('news');
+    console.log(res.status);
+    // console.log(res);
+  }
+
+  useEffect(() => {
+    test();
+    // console.log(test());
+  });
+
   return (
     <div className="App">
       <header className="App-header">
