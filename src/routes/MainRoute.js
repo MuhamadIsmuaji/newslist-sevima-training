@@ -1,5 +1,5 @@
 import { Home } from "../pages/Home";
-import { Other } from "../pages/Other";
+import { YourNews } from "../pages/YourNews";
 import { Auth } from "../pages/Auth";
 
 export const MainRoutes = [
@@ -10,9 +10,9 @@ export const MainRoutes = [
     component: Home
   },
   {
-    path: '/other',
-    title: 'Other',
-    component: Other
+    path: '/yournews',
+    title: 'Your News',
+    component: YourNews
   },
   {
     path: '/auth',

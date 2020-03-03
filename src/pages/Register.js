@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { APIJSON } from '../configs/API';
-import { useHistory } from 'react-router-dom';
-import { STORAGEKEY } from '../configs/KEY';
+import { AppContext } from '../configs/Auth';
+import { history } from '../configs/History';
 
 export const Register = () => {
-  const history = useHistory();
   const [userAttr, setUserAttr] = useState({ username: '', password: '' });
+  const {dispatchAuth} = useContext(AppContext);
 
   const handleSetUserAttr = (e) => {
     setUserAttr({ 
@@ -21,7 +21,7 @@ export const Register = () => {
       if (data.error) {
         alert(`Erorr: ${data.message}`);
       } else {
-        localStorage.setItem(STORAGEKEY, JSON.stringify({ ...data.data, token: data.meta.token }));
+        dispatchAuth({ type: 'NEW_AUTH', payload: { ...data.data, token: data.meta.token } });
         history.push('/');
       }
 

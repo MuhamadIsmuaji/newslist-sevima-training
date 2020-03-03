@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
-import { MainRoutes } from './routes/MainRoute';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  useHistory
 } from "react-router-dom";
-import { isLoggedIn } from './configs/Auth';
-import { STORAGEKEY } from './configs/KEY';
+import { history } from './configs/History';
+import { MainRoutes } from './routes/MainRoute';
+import { authReducer, initializeAuthData, AppContext } from './configs/Auth';
 
 function App() {
-  const history = useHistory();
+  const [authData, dispatchAuth] = useReducer(authReducer, initializeAuthData)
 
   const logout = () => {
-    localStorage.removeItem(STORAGEKEY);
+    dispatchAuth({ type: 'REMOVE_AUTH' });
     history.push('/');
   }
 
+  useEffect(() => {
+    console.log(authData);
+  })
+
   return (
-    <Router>
+    <Router history={history}>
       <nav className="navbar is-light" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
@@ -37,14 +40,16 @@ function App() {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
-            <Link className="navbar-item" to="/other">News</Link>
+            {
+              authData ? (<Link className="navbar-item" to="/yournews">Your News</Link>) : (``)
+            }
           </div>
 
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
                 {
-                  isLoggedIn ? (
+                  authData ? (
                     <button className="button is-danger" onClick={logout}>Log out</button>
                   ) : (
                     <Link className="button is-primary" to="/auth/register">Register</Link>
@@ -58,18 +63,20 @@ function App() {
       <div className="container">
         <div className="columns">
           <div className="column is-full">
-            <Switch>
-              {
-                MainRoutes.map((val, idx) =>
-                  <Route
-                    key={idx}
-                    path={val.path}
-                    exact={val.exact}
-                    children={<val.component />}
-                  ></Route>
-                )
-              }
-            </Switch>
+            <AppContext.Provider value={{ authData, dispatchAuth }}>
+              <Switch>
+                {
+                  MainRoutes.map((val, idx) =>
+                    <Route
+                      key={idx}
+                      path={val.path}
+                      exact={val.exact}
+                      children={<val.component />}
+                    ></Route>
+                  )
+                }
+              </Switch>
+            </AppContext.Provider>
           </div>
         </div>
       </div>
