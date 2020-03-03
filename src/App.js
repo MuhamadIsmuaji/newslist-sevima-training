@@ -1,37 +1,33 @@
-import React, { useEffect } from 'react';
-import { API } from './configs/API';
+import React from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
-
-import { routes } from './Routes';
+import { MainRoutes } from './routes/MainRoute';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useHistory
 } from "react-router-dom";
+import { isLoggedIn } from './configs/Auth';
+import { STORAGEKEY } from './configs/KEY';
 
 function App() {
-  const test = () => {
-    // console.log(API.headers);
-    const res = API.get('news');
-    console.log(res.status);
-    // console.log(res);
-  }
+  const history = useHistory();
 
-  useEffect(() => {
-    // test();
-    // console.log(test());
-  });
+  const logout = () => {
+    localStorage.removeItem(STORAGEKEY);
+    history.push('/');
+  }
 
   return (
     <Router>
       <nav className="navbar is-light" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://bulma.io">
+          <Link className="navbar-item" to="/">
             <img src="https://sevima.com/wp-content/themes/sevima2019/img/logo-sevima.png" className="img-brand" width="90" height="80" />
-          </a>
+          </Link>
           <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -41,15 +37,19 @@ function App() {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
-            {/* <a className="navbar-item">Your Posts</a> */}
-            <Link className="navbar-item" to="/">Home</Link>
+            <Link className="navbar-item" to="/other">News</Link>
           </div>
 
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <Link className="button is-primary" to="/other">Register</Link>
-                <Link className="button is-light" to="/">Log in</Link>
+                {
+                  isLoggedIn ? (
+                    <button className="button is-danger" onClick={logout}>Log out</button>
+                  ) : (
+                    <Link className="button is-primary" to="/auth/register">Register</Link>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ function App() {
           <div className="column is-full">
             <Switch>
               {
-                routes.map((val, idx) =>
+                MainRoutes.map((val, idx) =>
                   <Route
                     key={idx}
                     path={val.path}

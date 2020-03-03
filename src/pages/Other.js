@@ -1,5 +1,10 @@
 import React from 'react';
+import { PrivateRoute } from '../components/PrivateRoute';
 
 export const Other = () => {
-  return <h1>This is Other</h1>
+  return (
+    <PrivateRoute path="/other">
+      <h1>TEST</h1>
+    </PrivateRoute>
+  )
 }
