@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { AuthRoutes } from '../routes/AuthRoute';
-
 import {
   Switch,
   Route,

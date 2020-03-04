@@ -1,15 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { APIJSON } from '../configs/API';
 import { AppContext } from '../configs/Auth';
-import { history } from '../configs/History';
+import { useHistory } from 'react-router-dom';
 
 export const Register = () => {
+  const history = useHistory();
   const [userAttr, setUserAttr] = useState({ username: '', password: '' });
   const {dispatchAuth} = useContext(AppContext);
 
   const handleSetUserAttr = (e) => {
     setUserAttr({ 
-      ...userAttr, [e.target.name]: e.target.value 
+      ...userAttr, [e.target.name]: e.target.value
     })
   }
 

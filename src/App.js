@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,7 +20,7 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(authData);
+    // console.log(authData);
   })
 
   return (
@@ -50,9 +49,9 @@ function App() {
               <div className="buttons">
                 {
                   authData ? (
-                    <button className="button is-danger" onClick={logout}>Log out</button>
+                    <button className="button is-danger is-small" onClick={logout}>Log out</button>
                   ) : (
-                    <Link className="button is-primary" to="/auth/register">Register</Link>
+                    <Link className="button is-primary is-small" to="/auth/register">Register</Link>
                   )
                 }
               </div>

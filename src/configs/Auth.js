@@ -1,6 +1,6 @@
 import React from 'react';
 
-const STORAGEKEY = 'newslistsevkey';
+export const STORAGEKEY = 'newslistsevkey';
 
 export const initializeAuthData = JSON.parse(localStorage.getItem(STORAGEKEY));
 
