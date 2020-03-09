@@ -8,7 +8,7 @@ export const YourNewsList = () => {
 
   const fetchNews = async () => {
     try {
-      const { data } = await APIFORM.get('news-by-user');
+      const { data } = await APIFORM().get('news-by-user');
       setNewsList(data.data);
     } catch (error) {
       alert(error)
@@ -21,7 +21,7 @@ export const YourNewsList = () => {
 
   const deleteNews = async (news) => {
     try {
-      const response = await APIFORM.delete(`news/${news.id}`);
+      await APIFORM().delete(`news/${news.id}`);
       fetchNews();
     } catch (error) {
       alert(error)

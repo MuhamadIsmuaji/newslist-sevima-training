@@ -7,7 +7,7 @@ export const Home = () => {
   
   const fetchNews = async () => {
     try {
-      const { data } = await APIFORM.get('news');
+      const { data } = await APIFORM().get('news');
       setNewsList(data.data);
     } catch (error) {
       alert(error)

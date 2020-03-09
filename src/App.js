@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
 import {
@@ -18,10 +18,6 @@ function App() {
     dispatchAuth({ type: 'REMOVE_AUTH' });
     history.push('/');
   }
-
-  useEffect(() => {
-    // console.log(authData);
-  })
 
   return (
     <Router history={history}>

@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { STORAGEKEY } from './Auth';
+import { STORAGEKEY, initializeAuthData } from './Auth';
 
-export const baseUrl = `http://localhost/newslist-api-sevima-training/public/api`;
-const token = localStorage.getItem(STORAGEKEY) !== null ? JSON.parse(localStorage.getItem(STORAGEKEY)).token : '';
+export const baseUrl = `http://localhost/newslist-sevima-training-api/public/api`;
 
 export const APIJSON = axios.create({
   baseURL: baseUrl,
@@ -11,10 +10,12 @@ export const APIJSON = axios.create({
   }
 })
 
-export const APIFORM = axios.create({
-  baseURL: baseUrl,
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'Authorization': `Bearer ${token}`,
-  }
-})
+export const APIFORM = () => {
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem(STORAGEKEY)).token}`,
+    }
+  })
+}

@@ -21,7 +21,7 @@ export const YourNewsForm = () => {
     body.append('content', newsAttr.content);
     
     try {
-      const response = await APIFORM.post('news', body);
+      await APIFORM().post('news', body);
       history.push('/yournews');
     } catch (error) {
       alert(error)
