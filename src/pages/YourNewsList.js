@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { News } from '../components/News';
 import { APIFORM } from '../configs/API';
+import { AppContext } from '../configs/Auth';
 
 export const YourNewsList = () => {
   const [newsList, setNewsList] = useState([]);
+  const {dispatchAuth} = useContext(AppContext);
+  const history = useHistory();
 
   const fetchNews = async () => {
     try {
@@ -16,7 +19,8 @@ export const YourNewsList = () => {
   }
 
   const editNews = (news) => {
-
+    dispatchAuth({ type: 'EDIT_NEWS', payload: news });
+    history.push(`/yournews/edit/${news.id}`);
   }
 
   const deleteNews = async (news) => {
@@ -30,8 +34,8 @@ export const YourNewsList = () => {
 
   const selectNews = (news, action) => {
     switch (action) {
-      case 'edit':
-        editNews({})
+      case 'detail':
+        editNews(news)
         break;
     
       default:
@@ -42,6 +46,7 @@ export const YourNewsList = () => {
 
   useEffect(() => {
     fetchNews();
+    dispatchAuth({ type: 'CANCEL_EDIT_NEWS' });
   }, [])
   
   return (
@@ -49,7 +54,7 @@ export const YourNewsList = () => {
       <div className="columns is-mobile">
         <div className="column is-8">This is your news</div>
         <div className="column is-4">
-          <Link className="button is-primary is-small is-pulled-left" to="/yournews/form">Create News</Link>
+          <Link className="button is-primary is-small is-pulled-left" to="/yournews/create">Create News</Link>
         </div>
       </div>
       <div className="columns is-mobile">

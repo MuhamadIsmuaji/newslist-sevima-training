@@ -9,12 +9,12 @@ export const YourNewsRoutes = [
     component: YourNewsList
   },
   {
-    path: '/yournews/form',
+    path: '/yournews/create',
     title: 'Create Your News',
     component: YourNewsForm
   },
   {
-    path: '/yournews/form/:id',
+    path: '/yournews/edit/:id',
     title: 'Update Your News',
     component: YourNewsForm
   },

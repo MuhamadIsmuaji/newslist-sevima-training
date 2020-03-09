@@ -21,9 +21,9 @@ export const News = (props) => {
           <div className="columns">
             <div className="column is-12">
               <div className="field is-grouped is-grouped-centered">
-                {/* <p className="control">
-                  <button className="button is-info is-small" onClick={() => props.onClick(props.news, 'detail')}>Detail</button>
-                </p> */}
+                <p className="control">
+                  <button className="button is-info is-small" onClick={() => props.onClick(props.news, 'detail')}>Detail & Edit</button>
+                </p>
                 <p className="control">
                   <button className="button is-danger is-small" onClick={() => props.onClick(props.news, 'delete')}>Delete</button>
                 </p>

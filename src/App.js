@@ -7,11 +7,12 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import { history } from './configs/History';
 import { MainRoutes } from './routes/MainRoute';
 import { authReducer, initializeAuthData, AppContext } from './configs/Auth';
+import { createBrowserHistory } from 'history';
 
 function App() {
+  const history = createBrowserHistory();
   const [authData, dispatchAuth] = useReducer(authReducer, initializeAuthData)
 
   const logout = () => {
@@ -45,9 +46,9 @@ function App() {
               <div className="buttons">
                 {
                   authData ? (
-                    <button className="button is-danger is-small" onClick={logout}>Log out</button>
+                    <button className="button is-danger is-small" onClick={logout}>{`Hello ${authData.auth.username}, you can log out here...`}</button>
                   ) : (
-                    <Link className="button is-primary is-small" to="/auth/register">Register</Link>
+                    <Link className="button is-primary is-small" to="/auth">Login or Register</Link>
                   )
                 }
               </div>
